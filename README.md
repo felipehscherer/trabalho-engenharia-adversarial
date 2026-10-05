@@ -87,7 +87,92 @@ Essa dinâmica de ação–observação–adaptação por ambos os lados, movida
 
 ## 3.2 Modelo estratégico estático
 
-_Pendente — ver [`GUIA-DE-EXECUCAO.md`](GUIA-DE-EXECUCAO.md), Etapa 3._
+### Decisão central modelada
+
+A decisão central é tomada no momento em que a venda abre: o **revendedor/scalper** decide **como** vai tentar comprar, e a **plataforma** decide **quão rigoroso** será o controle de entrada naquela abertura. As duas decisões são tomadas sem que um saiba, de antemão, o que o outro escolheu: o scalper não conhece a configuração das defesas antes de tentar, e a plataforma não sabe se aquela abertura terá ataque automatizado.
+
+O comprador legítimo não é um jogador da matriz, mas é afetado pelo resultado de cada célula, como discutido abaixo.
+
+### Ações de cada jogador
+
+| Jogador | Ação | O que representa |
+|---|---|---|
+| **Scalper (A)** | **A1 — Compra comum** | Usa uma única conta e um único CPF, compra manualmente e respeita o limite por CPF, como qualquer comprador. |
+| **Scalper (A)** | **A2 — Automação com múltiplas contas** | Usa bots para repetir requisições na fila e várias contas com CPFs de terceiros para contornar o limite por CPF (pressuposto 1 da seção 3.1). |
+| **Plataforma (B)** | **B1 — Controle básico** | Mantém apenas a fila virtual e o limite simples por CPF/conta, sem CAPTCHA, sem rate limit e sem análise de padrões. |
+| **Plataforma (B)** | **B2 — Controle reforçado** | Adiciona CAPTCHA, rate limit por IP/dispositivo, detecção de padrões automatizados e checagem cruzada de CPF, cartão e dispositivo. |
+
+### Matriz de payoffs
+
+Os valores vão de **0 (pior)** a **3 (melhor)** e representam apenas a **ordem de preferência** de cada jogador. A ordem do par é **(payoff do Scalper, payoff da Plataforma)**.
+
+| Scalper \ Plataforma | B1 — Controle básico | B2 — Controle reforçado |
+|---|---:|---:|
+| **A1 — Compra comum** | `(2, 3)` | `(1, 2)` |
+| **A2 — Automação com múltiplas contas** | `(3, 0)` | `(0, 1)` |
+
+### Justificativa dos payoffs
+
+| Resultado | Scalper | Plataforma | Por quê |
+|---|---:|---:|---|
+| **A2, B1** | **3** | **0** | Melhor caso para o scalper: as contas múltiplas e os bots passam sem resistência, ele concentra o estoque e revende com ágio. Pior caso para a plataforma: a distribuição deixa de ser justa, compradores legítimos encontram "esgotado" e a reputação da venda é prejudicada. |
+| **A1, B1** | **2** | **3** | Para o scalper, compra poucos ingressos (dentro do limite) sem gastar com infraestrutura: lucro pequeno, mas sem custo. Melhor caso para a plataforma: a venda é justa e ela não paga o custo de defesas extras nem impõe atrito aos usuários. |
+| **A1, B2** | **1** | **2** | O scalper obtém o mesmo lucro pequeno de A1, mas agora enfrenta CAPTCHA e espera adicional. A plataforma mantém a venda justa, mas paga o custo computacional das defesas e cria atrito desnecessário para compradores legítimos (CAPTCHA, possíveis falsos positivos). |
+| **A2, B2** | **0** | **1** | Pior caso para o scalper: pagou por bots, proxies e CPFs, e boa parte das contas é desafiada ou bloqueada. A plataforma contém a maior parte do abuso, mas paga o custo das defesas, algumas contas ainda passam e alguns compradores legítimos são bloqueados por engano. |
+
+As preferências seguem os objetivos e custos da tabela de atores da seção 3.1:
+
+- **Scalper:** A2 com B1 (3) > A1 com B1 (2) > A1 com B2 (1) > A2 com B2 (0).
+- **Plataforma:** A1 com B1 (3) > A1 com B2 (2) > A2 com B2 (1) > A2 com B1 (0).
+
+### Melhores respostas
+
+| Se o outro jogador escolhe... | Melhor resposta | Comparação |
+|---|---|---|
+| Plataforma escolhe **B1** | Scalper escolhe **A2** | 3 > 2 |
+| Plataforma escolhe **B2** | Scalper escolhe **A1** | 1 > 0 |
+| Scalper escolhe **A1** | Plataforma escolhe **B1** | 3 > 2 |
+| Scalper escolhe **A2** | Plataforma escolhe **B2** | 1 > 0 |
+
+A melhor decisão de cada jogador **depende da escolha do outro**. Se a plataforma relaxa os controles, compensa ao scalper automatizar; se ela reforça, compensa a ele comprar normalmente. Da mesma forma, a plataforma só quer pagar pelo controle reforçado se houver ataque.
+
+### Estratégia dominante
+
+**Nenhum dos jogadores possui estratégia dominante.**
+
+- O scalper prefere A2 contra B1, mas prefere A1 contra B2. Nenhuma ação é melhor para ele em todos os casos.
+- A plataforma prefere B1 contra A1, mas prefere B2 contra A2. Também não há uma ação sempre melhor.
+
+### Existe um resultado em que nenhum jogador melhora mudando sozinho?
+
+**Não em estratégias puras.** Em cada uma das quatro células, um dos jogadores ganha se mudar de ação sozinho:
+
+| Célula | Quem quer mudar | Para onde |
+|---|---|---|
+| (A1, B1) | Scalper (2 → 3) | (A2, B1) |
+| (A2, B1) | Plataforma (0 → 1) | (A2, B2) |
+| (A2, B2) | Scalper (0 → 1) | (A1, B2) |
+| (A1, B2) | Plataforma (2 → 3) | (A1, B1) |
+
+As melhores respostas formam um **ciclo**: controle básico atrai automação, automação leva a plataforma a reforçar o controle, o controle reforçado faz o scalper voltar à compra comum, e a compra comum faz a plataforma relaxar o controle. Essa estrutura é típica dos **jogos de inspeção**, em que um inspetor decide se fiscaliza e um agente decide se viola a regra [1].
+
+Existe, porém, um **equilíbrio em estratégias mistas**, em que cada jogador escolhe suas ações com certa probabilidade, de modo que o outro fique indiferente entre as suas:
+
+- O scalper usa **A2 em 50%** das aberturas, o que deixa a plataforma indiferente: com B1, ela espera 3 × 0,5 + 0 × 0,5 = 1,5; com B2, espera 2 × 0,5 + 1 × 0,5 = 1,5.
+- A plataforma usa **B2 em 50%** das aberturas, o que deixa o scalper indiferente: com A1, ele espera 2 × 0,5 + 1 × 0,5 = 1,5; com A2, espera 3 × 0,5 + 0 × 0,5 = 1,5.
+
+Como os payoffs representam apenas ordem de preferência, o valor de 50% é ilustrativo. A conclusão importante é qualitativa: **a plataforma precisa ser imprevisível**, porque, se o scalper souber que o controle está sempre no modo básico, ele sempre automatiza; e **o abuso nunca desaparece completamente**, apenas passa a ocorrer em parte das aberturas.
+
+### Esse resultado é bom para o sistema e para os usuários legítimos?
+
+**Não totalmente.** No equilíbrio misto, a plataforma obtém em média 1,5, bem abaixo do seu melhor resultado (3, venda justa sem custo de defesa).
+
+- **Para o sistema:** em parte das aberturas o scalper automatiza e encontra o controle básico, concentrando ingressos. Em outra parte, a plataforma paga pelo controle reforçado mesmo sem ataque.
+- **Para os compradores legítimos:** eles perdem de duas formas. Quando o scalper vence, encontram o estoque esgotado. Quando a plataforma reforça o controle, enfrentam CAPTCHA, espera maior e risco de bloqueio por engano.
+
+Na prática, a plataforma costuma anunciar suas regras antes da venda. Se ela se comprometer publicamente com o controle reforçado, a melhor resposta do scalper passa a ser A1, e o resultado vai para **(A1, B2) = (1, 2)**: a venda é justa, mas os compradores legítimos pagam o custo do atrito. Esse resultado, porém, só se mantém enquanto as defesas funcionarem. Quando o scalper aprende a contornar o CAPTCHA e a análise de padrões, o payoff de A2 contra B2 deixa de ser 0, e o jogo recomeça. Essa evolução é analisada como uma sequência de rodadas no modelo dinâmico (seção 3.3).
+
+---
 
 ## 3.3 Modelo estratégico dinâmico
 
