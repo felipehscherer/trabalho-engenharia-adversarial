@@ -1,16 +1,24 @@
-graph TD
-    C[Comprador legítimo]
-    S[Revendedor / Scalper]
-    P[Plataforma de venda de ingressos]
-    PG[Processador de pagamento]
-    M[Mercado secundário de revenda]
+flowchart TB
+    subgraph participantes[Participantes]
+        direction LR
+        C[Comprador legítimo]
+        S[Revendedor / scalper]
+    end
 
-    C -->|acessa a fila virtual e tenta comprar| P
-    S -->|usa bots / múltiplas contas e tenta comprar| P
+    P[Plataforma de venda de ingressos]
+
+    subgraph externos[Serviços e ambiente externo]
+        direction LR
+        PG[Processador de pagamento]
+        M[Mercado secundário de revenda]
+    end
+
+    C -->|acessa a fila e tenta comprar| P
+    S -->|tenta comprar para revender| P
     P -->|encaminha pagamento| PG
     PG -->|confirma pagamento| P
     P -->|emite ingresso| C
     P -->|emite ingresso| S
     S -->|revende com ágio| M
-    P -.->|CAPTCHA, limite por CPF/conta, bloqueio| S
-    P -.->|posição na fila, confirmação, mensagem de esgotado| C
+    P -.->|fila, confirmação ou esgotado| C
+    P -.->|CAPTCHA, limite ou bloqueio| S

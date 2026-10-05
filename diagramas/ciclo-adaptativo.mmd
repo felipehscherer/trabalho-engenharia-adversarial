@@ -1,0 +1,41 @@
+flowchart LR
+    subgraph R1["Rodada 1"]
+        direction TB
+        R1A["Ação<br/>acesso normal e<br/>tentativa de compra"]
+        R1P["Resposta<br/>fila virtual e<br/>limite básico"]
+        R1O["Observação<br/>posição, tempo e<br/>mensagens"]
+        R1D["Adaptação<br/>automatizar tentativas<br/>e criar contas"]
+        R1A --> R1P --> R1O --> R1D
+    end
+
+    subgraph R2["Rodada 2"]
+        direction TB
+        R2A["Ação<br/>múltiplas contas e<br/>requisições automatizadas"]
+        R2P["Resposta<br/>CAPTCHA, rate limit<br/>e bloqueios parciais"]
+        R2O["Observação<br/>contas, IPs e padrões<br/>desafiados"]
+        R2D["Adaptação<br/>scalper varia o padrão;<br/>plataforma ajusta detecção"]
+        R2A --> R2P --> R2O --> R2D
+    end
+
+    subgraph R3["Rodada 3"]
+        direction TB
+        R3A["Ação<br/>cadência mais<br/>parecida com humana"]
+        R3P["Resposta<br/>análise comportamental<br/>e checagem pós-compra"]
+        R3O["Observação<br/>conversão, falsos positivos<br/>e revenda"]
+        R3D["Adaptação<br/>novos ajustes, custos<br/>e efeitos sobre legítimos"]
+        R3A --> R3P --> R3O --> R3D
+    end
+
+    R1D --> R2A
+    R2D --> R3A
+    R3D -.->|nova abertura ou política| R1A
+
+    classDef adversary fill:#ffe0e0,stroke:#b42318,color:#5f1210
+    classDef defender fill:#e0edff,stroke:#175cd3,color:#102a56
+    classDef observation fill:#fff1cc,stroke:#b54708,color:#572300
+    classDef adaptation fill:#e5f6e8,stroke:#18794e,color:#0b4529
+
+    class R1A,R2A,R3A adversary
+    class R1P,R2P,R3P defender
+    class R1O,R2O,R3O observation
+    class R1D,R2D,R3D adaptation

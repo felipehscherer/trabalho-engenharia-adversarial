@@ -1,0 +1,52 @@
+flowchart LR
+    subgraph atores["Participantes"]
+        direction TB
+        S["Revendedor / scalper"]
+        C["Comprador legítimo"]
+    end
+
+    subgraph fluxo["Fluxo observado pelo sistema"]
+        direction TB
+        F["Fila virtual<br/>token e posição"]
+        I["Identidade e limite<br/>CPF e conta"]
+        K["Checkout e reserva<br/>pagamento e estoque"]
+        D["Defesas observáveis<br/>CAPTCHA, rate limit<br/>e bloqueios"]
+        F -->|cadastro e limite| I
+        I -->|reserva e pagamento| K
+        K -->|desafios e decisões| D
+    end
+
+    subgraph pontos["Pontos de exploração"]
+        direction TB
+        E1(("E1<br/>fila e requisições"))
+        E2(("E2<br/>unicidade de CPF/conta"))
+        E3(("E3<br/>CAPTCHA e comportamento"))
+        E4(("E4<br/>reserva e estoque"))
+    end
+
+    A["Ativos a preservar<br/>justiça, disponibilidade,<br/>confiança e privacidade"]
+
+    S -->|tentativas repetidas| F
+    C -->|acesso legítimo| F
+    D -.->|resposta observável| S
+    D -.->|possível atrito| C
+
+    F -.-> E1
+    I -.-> E2
+    K -.-> E4
+    D -.-> E3
+
+    E1 --> A
+    E2 --> A
+    E4 --> A
+    E3 --> A
+
+    classDef actor fill:#ffe0e0,stroke:#b42318,color:#5f1210
+    classDef interface fill:#e0edff,stroke:#175cd3,color:#102a56
+    classDef exploit fill:#fff1cc,stroke:#b54708,color:#572300
+    classDef asset fill:#e5f6e8,stroke:#18794e,color:#0b4529
+
+    class S,C actor
+    class F,I,K,D interface
+    class E1,E2,E3,E4 exploit
+    class A asset
