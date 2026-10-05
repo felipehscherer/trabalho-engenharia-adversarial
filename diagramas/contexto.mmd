@@ -1,0 +1,16 @@
+graph TD
+    C[Comprador legítimo]
+    S[Revendedor / Scalper]
+    P[Plataforma de venda de ingressos]
+    PG[Processador de pagamento]
+    M[Mercado secundário de revenda]
+
+    C -->|acessa a fila virtual e tenta comprar| P
+    S -->|usa bots / múltiplas contas e tenta comprar| P
+    P -->|encaminha pagamento| PG
+    PG -->|confirma pagamento| P
+    P -->|emite ingresso| C
+    P -->|emite ingresso| S
+    S -->|revende com ágio| M
+    P -.->|CAPTCHA, limite por CPF/conta, bloqueio| S
+    P -.->|posição na fila, confirmação, mensagem de esgotado| C
