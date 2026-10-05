@@ -10,7 +10,7 @@ flowchart LR
         F["Fila virtual<br/>token e posição"]
         I["Identidade e limite<br/>CPF e conta"]
         K["Checkout e reserva<br/>pagamento e estoque"]
-        D["Defesas observáveis<br/>CAPTCHA, rate limit<br/>e bloqueios"]
+        D["Defesas observáveis<br/>CAPTCHA, rate limit,<br/>bloqueios e atrito"]
         F -->|cadastro e limite| I
         I -->|reserva e pagamento| K
         K -->|desafios e decisões| D
@@ -26,10 +26,8 @@ flowchart LR
 
     A["Ativos a preservar<br/>justiça, disponibilidade,<br/>confiança e privacidade"]
 
-    S -->|tentativas repetidas| F
-    C -->|acesso legítimo| F
-    D -.->|resposta observável| S
-    D -.->|possível atrito| C
+    S -->|tentativas| F
+    C -->|acesso| F
 
     F -.-> E1
     I -.-> E2
