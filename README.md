@@ -176,11 +176,99 @@ Na prática, a plataforma costuma anunciar suas regras antes da venda. Se ela se
 
 ## 3.3 Modelo estratégico dinâmico
 
-_A descrição das rodadas será consolidada pelo integrante responsável pelo modelo dinâmico._
+Na seção 3.2 o conflito foi analisado como uma "fotografia": uma única abertura de vendas, na qual scalper e plataforma escolhem ao mesmo tempo. Aqui o mesmo jogo é visto como um "filme". As melhores respostas da matriz formam um ciclo (controle básico atrai automação, automação atrai controle reforçado, controle reforçado atrai compra comum, e assim por diante), e esse ciclo acontece ao longo de aberturas de venda consecutivas, em que cada lado carrega o que aprendeu na anterior.
 
-O diagrama editável do ciclo adaptativo já está em
-[`diagramas/ciclo-adaptativo.mmd`](diagramas/ciclo-adaptativo.mmd), com a respectiva
-imagem em [`diagramas/ciclo-adaptativo.png`](diagramas/ciclo-adaptativo.png).
+Cada rodada corresponde a uma abertura de vendas (um evento, ou uma fase de venda do mesmo evento). O scalper mantém sempre o mesmo objetivo: obter o maior número de ingressos para revenda com ágio. O que muda é como ele age. A plataforma mantém o objetivo de distribuir o estoque de forma justa, com baixo custo e pouco atrito, e muda quanto e onde ela controla.
+
+### Rodadas adversariais
+
+| Rodada | Ação do participante (scalper) | Resposta do sistema ou defensor | O que se torna observável? | Adaptação para a rodada seguinte |
+|-:|---|---|---|---|
+| **1** | Entra na fila como comprador comum, com uma conta e um CPF, e compra dentro do limite. Funciona como sonda: testa se há CAPTCHA, se há bloqueio por velocidade e se o limite depende só do CPF. *(célula A1, B1 da matriz)* | Fila virtual e limite simples por CPF/conta, sem CAPTCHA, sem rate limit e sem análise de padrões. A venda corre sem intervenção. | **Scalper:** nenhum desafio apareceu, nenhuma conta foi bloqueada, o tempo de resposta foi estável e o limite é apenas por CPF. O estoque esgotou rápido e o ágio na revenda é alto.<br>**Plataforma:** tráfego sem anomalia aparente. O único indício, tardio e fraco, é ingressos reaparecendo no mercado secundário. | **Scalper:** conclui que automatizar compensa (3 > 2 na matriz) e investe em bots, proxies rotativos, contas adicionais e CPFs de terceiros.<br>**Plataforma:** não vê motivo claro para reforçar, já que B1 é sua melhor resposta a A1. Passa a registrar logs de IP, dispositivo e cartão por conta. |
+| **2** | Usa dezenas de contas com CPFs de terceiros e requisições automatizadas com cadência fixa, distribuídas por IPs rotativos. *(célula A2 contra B1, que passa a B2 no meio da venda)* | A venda começa em B1 e deixa passar os primeiros minutos. A plataforma detecta o pico de requisições idênticas e vários CPFs ligados ao mesmo cartão ou dispositivo, e ativa durante a venda CAPTCHA, rate limit por IP/dispositivo, bloqueio parcial de contas e revisão de compras suspeitas. *(célula A2, B2)* | **Scalper:** quais contas receberam CAPTCHA, quais IPs foram bloqueados, a partir de que velocidade o desafio apareceu e quanto estoque já tinha sido concentrado antes da reação.<br>**Plataforma:** assinatura dos bots (cadência fixa, user-agent repetido, cartão compartilhado) e a lista de contas, IPs e cartões associados ao abuso. | **Scalper:** descarta as contas e os IPs queimados (custo perdido), randomiza a cadência, troca para proxies residenciais, usa cartões distintos por conta e passa a terceirizar o CAPTCHA para serviços de resolução ou fazendas de cliques.<br>**Plataforma:** passa a ativar B2 desde o início em eventos de alta demanda, incorpora análise comportamental e prevê checagem pós-compra. |
+| **3** | Age com cadência parecida com a humana, com contas "envelhecidas" (criadas e usadas antes da abertura), proxies residenciais, CAPTCHAs resolvidos por terceiros e compras espalhadas entre muitas contas. *(A2 adaptada contra B2)* | B2 desde a abertura, com análise comportamental (consistência de sessão, interação) e checagem pós-compra: ingressos de contas com sinais combinados suspeitos (cartão, dispositivo, histórico) ficam retidos para revisão ou podem ser cancelados. Parte dos controles é variada entre aberturas, para não ser previsível. | **Scalper:** parte das compras passou, mas algumas foram canceladas depois da venda. Ele só descobre isso ao final, e percebe que o custo por ingresso subiu (proxies residenciais, resolução de CAPTCHA, contas descartadas).<br>**Plataforma:** conversão por conta, taxa de falsos positivos (reclamações e recursos), reaparição de ingressos na revenda e contas "perfeitas demais". Também vê quanto atrito impôs a quem comprou legitimamente. | **Scalper:** reavalia se o ágio ainda cobre o custo. Se sim, escala com pessoas reais (fazendas de cliques), que são mais difíceis de distinguir. Se não, migra para outro evento ou plataforma com defesas mais fracas.<br>**Plataforma:** recalibra limiares para reduzir falsos positivos, desloca parte do controle da entrada para o pós-compra (menos atrito na fila) e cria canal de contestação. O jogo recomeça na próxima abertura. |
+
+### O que a rodada anterior muda na seguinte
+ 
+| Elemento | Após a rodada 1 | Após a rodada 2 | Após a rodada 3 |
+|---|---|---|---|
+| **Conhecimento do scalper** | Sabe que não há atrito e que o limite é só por CPF. | Conhece o limiar de velocidade, os tipos de desafio e o que foi bloqueado. | Sabe que há revisão pós-compra e que compras podem ser canceladas. |
+| **Conhecimento da plataforma** | Quase nenhum (só logs e revenda tardia). | Assinaturas dos bots e lista de contas, IPs e cartões abusivos. | Taxa de falsos positivos e padrão de contas sofisticadas. |
+| **Recursos do scalper** | Uma conta, sem investimento. | Contas e IPs queimados (custo perdido), nova infraestrutura. | Contas envelhecidas e serviços de resolução de CAPTCHA (custo maior por ingresso). |
+| **Postura da plataforma** | B1 | B1 reativo, depois B2 durante a venda | B2 desde o início, com controles variados e checagem pós-compra |
+| **Atrito para o comprador legítimo** | Nenhum | CAPTCHA e espera para todos; alguns bloqueios indevidos | CAPTCHA, espera, risco de retenção ou cancelamento indevido e mais dados pedidos |
+ 
+A tabela mostra a ligação entre as rodadas: o que acontece em uma delas reduz ou amplia as opções da seguinte (contas queimadas, sinais já conhecidos, confiança do público na venda).
+
+### Diagrama do ciclo adaptativo
+
+Fonte editável: [`diagramas/ciclo-adaptativo.mmd`](diagramas/ciclo-adaptativo.mmd), acompanhada da imagem [`diagramas/ciclo-adaptativo.png`](diagramas/ciclo-adaptativo.png).
+
+```mermaid
+flowchart TB
+    subgraph R1["Rodada 1"]
+        direction LR
+        R1A["Ação<br/>acesso normal e<br/>tentativa de compra"]
+        R1P["Resposta<br/>fila virtual e<br/>limite básico"]
+        R1O["Observação<br/>posição, tempo e<br/>mensagens"]
+        R1D["Adaptação<br/>automatizar tentativas<br/>e criar contas"]
+        R1A --> R1P --> R1O --> R1D
+    end
+
+    subgraph R2["Rodada 2"]
+        direction LR
+        R2A["Ação<br/>múltiplas contas e<br/>requisições automatizadas"]
+        R2P["Resposta<br/>CAPTCHA, rate limit<br/>e bloqueios parciais"]
+        R2O["Observação<br/>contas, IPs e padrões<br/>desafiados"]
+        R2D["Adaptação<br/>scalper varia o padrão;<br/>plataforma ajusta detecção"]
+        R2A --> R2P --> R2O --> R2D
+    end
+
+    subgraph R3["Rodada 3"]
+        direction LR
+        R3A["Ação<br/>cadência mais<br/>parecida com humana"]
+        R3P["Resposta<br/>análise comportamental<br/>e checagem pós-compra"]
+        R3O["Observação<br/>conversão, falsos positivos<br/>e revenda"]
+        R3D["Adaptação<br/>novos ajustes, custos<br/>e efeitos sobre legítimos"]
+        R3A --> R3P --> R3O --> R3D
+    end
+
+    R1 --> R2
+    R2 --> R3
+    R3 -.->|nova abertura ou política| R1
+
+    classDef adversary fill:#ffe0e0,stroke:#b42318,color:#5f1210
+    classDef defender fill:#e0edff,stroke:#175cd3,color:#102a56
+    classDef observation fill:#fff1cc,stroke:#b54708,color:#572300
+    classDef adaptation fill:#e5f6e8,stroke:#18794e,color:#0b4529
+
+    class R1A,R2A,R3A adversary
+    class R1P,R2P,R3P defender
+    class R1O,R2O,R3O observation
+    class R1D,R2D,R3D adaptation
+```
+
+### Perguntas finais
+
+**Quem observa quem?**
+
+O scalper observa a plataforma pelas respostas visíveis: desafios, bloqueios, cancelamentos, esgotamento do estoque. A plataforma observa o scalper pelos rastros que ele deixa: cadência de requisições, repetição de IP, dispositivo e cartão, conversão por conta e ingressos reaparecendo na revenda. O comprador legítimo observa apenas a fila e o atrito, mas sua reação (reclamações, abandono, perda de confiança) é um sinal que a plataforma também lê.
+
+**O que cada lado consegue mudar?**
+
+O scalper muda a forma da ação (número de contas, cadência, origem do tráfego, meio de pagamento, quem resolve o CAPTCHA), mas não seu objetivo. A plataforma muda a intensidade e a localização dos controles (na entrada ou depois da compra), os limiares, a combinação de sinais e o grau de previsibilidade das defesas. Nenhum dos dois controla o ágio do mercado secundário, que é o que sustenta o incentivo.
+
+**O que dispara uma adaptação?**
+
+Para o scalper: um bloqueio, um desafio novo, um cancelamento ou queda na taxa de sucesso, ou seja, quando o custo por ingresso passa a se aproximar do ágio. Para a plataforma: um pico anômalo, assinaturas repetidas (cartão compartilhado, cadência fixa), ingressos na revenda logo após a venda, ou aumento de reclamações e falsos positivos.
+
+**Qual é o custo da adaptação para cada lado?**
+
+Para o scalper: perda das contas e dos IPs queimados, proxies residenciais, serviços de CAPTCHA e fazendas de cliques, CPFs de terceiros e risco de banimento. Para a plataforma: custo computacional e de engenharia das defesas, risco de falsos positivos, custo de reputação se a venda parecer injusta, e coleta de mais dados pessoais. Parte importante do custo da plataforma recai sobre o comprador legítimo (CAPTCHA, espera, bloqueio indevido, retenção da compra), que não participa da disputa mas paga por ela.
+
+**Em que ponto pode surgir uma corrida armamentista?**
+
+A partir da rodada 3. Quando cada sinal novo da plataforma é respondido por uma imitação melhor do scalper (cadência humana, contas envelhecidas, pessoas reais), as duas partes passam a investir de forma contínua, sem chegar a um ponto de repouso. O fator que sustenta a corrida é o ágio: enquanto o lucro esperado da revenda superar o custo por ingresso, o scalper continua investindo. Para a plataforma o custo é permanente e é repartido com os compradores legítimos, que sofrem mais atrito a cada ciclo. Por isso o sistema deve evitar depender de um único controle e buscar também reduzir o incentivo (por exemplo, limitar a transferência de ingressos), em vez de apenas aumentar a rigidez da defesa.
 
 ## 3.4 Ameaças e riscos
 
