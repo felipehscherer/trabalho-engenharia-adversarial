@@ -15,8 +15,8 @@ Este documento existe para que **qualquer integrante do grupo** consiga continua
 | 1 | Escolha e delimitação do sistema | Introdução do README | — | ✅ Concluída |
 | 2 | Descrição do sistema adversarial | README § 3.1 | Etapa 1 | ✅ Concluída |
 | 3 | Modelo estratégico estático | README § 3.2 | Etapa 2 | ✅ Concluída |
-| 4 | Modelo estratégico dinâmico | README § 3.3 | Etapa 3 | 🔲 A fazer |
-| 5 | Ameaças e riscos | README § 3.4 | Etapas 2–4 | 🔲 A fazer |
+| 4 | Modelo estratégico dinâmico | README § 3.3 | Etapa 3 | ✅ Concluída |
+| 5 | Ameaças e riscos | README § 3.4 | Etapas 2–4 | ✅ Concluída |
 | 6 | Montagem final do repositório (declaração de IA, referências, contribuições) | README (final) | Etapas 2–5 | 🔲 A fazer |
 | 7 | Slides da apresentação | externo (Google Slides/Canva) | Etapas 2–6 | 🔲 A fazer |
 | 8 | Revisão final + checklist | — | Etapas 1–7 | 🔲 A fazer |
