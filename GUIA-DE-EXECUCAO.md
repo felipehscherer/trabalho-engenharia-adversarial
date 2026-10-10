@@ -94,6 +94,8 @@ Cada etapa abaixo diz **o que produzir**, **em qual arquivo** e **o que não pod
 
 Uma divisão possível para o vídeo é: 2 minutos para sistema/atores, 2 minutos para modelo estático, 2 minutos para modelo dinâmico e 2 minutos para ameaças/resposta. Reservar até 1 minuto para abertura, conclusão e transições, mirando 9 minutos no total. É uma sugestão; a fala real deve ser equilibrada entre os quatro integrantes.
 
+O endereço de edição do Canva não substitui o PDF nem a publicação do vídeo no YouTube. A conferência dos arquivos finais e a submissão são etapas externas ao relatório.
+
 ---
 
 ## Etapa 8 — Revisão final (antes de entregar)

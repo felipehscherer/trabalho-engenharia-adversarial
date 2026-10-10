@@ -385,19 +385,9 @@ Ver [`fontes/referencias.md`](fontes/referencias.md).
 
 ## Contribuições individuais
 
-As contribuições abaixo são rastreáveis no histórico do repositório; os commits registram autoria e não são, isoladamente, uma medida da qualidade ou do esforço de cada pessoa.
-
-| Integrante | Contribuição registrada | Commits de referência |
-|---|---|---|
-| Felipe H. Scherer | Criação do repositório, descrição inicial do sistema, atores e pressupostos, diagrama de contexto inicial e guia de execução. | `65853dc` |
-| Rafael da Silva Moral | Modelo estratégico estático, justificativa dos payoffs, melhores respostas e análise dos equilíbrios; referência sobre jogos de inspeção. | `7a9d8eb`, `749311d` |
-| Lucas Correa Rodrigues | Modelo estratégico dinâmico, rodadas, respostas finais e revisão do diagrama do ciclo adaptativo e de sua imagem exportada. | `e3bc635`, `fe9659e`, `1bc9a1d` |
-| Eduardo dos Santos Paim | Ameaças e riscos, superfície de ataque, fontes e exportações de diagramas, refinamentos de contexto e melhorias de espaçamento e legibilidade; preparação dos três slides de ameaças e riscos com apoio de IA. | `60eab6d`, `82f3502`, `da05f08`, `c5ec477` |
-
-## Apresentação e entrega
-
-- **Apresentação em PDF:** entregar o link da versão final exportada no site da atividade, com acesso para avaliação.
-- **Vídeo no YouTube:** entregar o link do vídeo final no site da atividade, com acesso para avaliação.
-- **Duração máxima:** 10 minutos por apresentação, conforme orientação posterior do professor informada pelo grupo. Conferir a duração do vídeo exportado, incluindo abertura e encerramento, e o equilíbrio de fala dos integrantes.
-
-O endereço de edição do Canva não substitui o PDF nem a publicação do vídeo no YouTube. Os links podem ser entregues diretamente no site da atividade; registrá-los no repositório é opcional. A conferência dos arquivos finais e a submissão são etapas externas a este relatório.
+| Integrante | Contribuição |
+|---|---|
+| Felipe H. Scherer | Descrição do sistema, atores, pressupostos e contexto inicial. |
+| Rafael da Silva Moral | Modelo estratégico estático e análise dos equilíbrios. |
+| Lucas Correa Rodrigues | Modelo dinâmico, rodadas e ciclo adaptativo. |
+| Eduardo dos Santos Paim | Ameaças e riscos, superfície de ataque, refinamento dos diagramas e slides correspondentes. |
