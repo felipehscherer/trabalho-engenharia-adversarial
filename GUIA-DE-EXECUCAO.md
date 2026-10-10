@@ -2,7 +2,9 @@
 
 Este documento existe para que **qualquer integrante do grupo** consiga continuar o trabalho sem depender de explicação verbal. Ele não faz parte do relatório entregue (o relatório é o `README.md`) — é um guia operacional interno.
 
-**Prazo de entrega: 06/10 às 23:59.**
+**Prazo registrado no enunciado: 06/10/2026 às 23:59.** Como a revisão de fechamento foi realizada em 10/10/2026, confirmar no site da atividade qualquer nova orientação sobre prazo; este guia não presume prorrogação.
+
+**Composição final informada pelo grupo:** Eduardo dos Santos Paim, Felipe H. Scherer, Rafael da Silva Moral e Lucas Correa Rodrigues. Atualizar também a capa dos slides e o cadastro da atividade, quando aplicável.
 
 **Sistema escolhido:** compra de ingressos durante a abertura das vendas gerais de um evento com estoque limitado (fila virtual). Atores: comprador legítimo, revendedor/scalper, plataforma (defensor). Ver `README.md` seção 3.1 para o detalhamento já pronto.
 
@@ -17,9 +19,9 @@ Este documento existe para que **qualquer integrante do grupo** consiga continua
 | 3 | Modelo estratégico estático | README § 3.2 | Etapa 2 | ✅ Concluída |
 | 4 | Modelo estratégico dinâmico | README § 3.3 | Etapa 3 | ✅ Concluída |
 | 5 | Ameaças e riscos | README § 3.4 | Etapas 2–4 | ✅ Concluída |
-| 6 | Montagem final do repositório (declaração de IA, referências, contribuições) | README (final) | Etapas 2–5 | 🔲 A fazer |
-| 7 | Slides da apresentação | externo (Google Slides/Canva) | Etapas 2–6 | 🔲 A fazer |
-| 8 | Revisão final + checklist | — | Etapas 1–7 | 🔲 A fazer |
+| 6 | Montagem final do repositório (declaração de IA, referências, contribuições) | README (final) | Etapas 2–5 | ✅ Consolidada; confirmar declaração de IA com os integrantes |
+| 7 | PDF e vídeo final | externo (Canva/YouTube/site da atividade) | Etapas 2–6 | 🔲 Conferência e entrega externas pendentes |
+| 8 | Revisão final + checklist | — | Etapas 1–7 | ✅ Relatório revisado; entrega externa ainda não validada |
 
 Cada etapa abaixo diz **o que produzir**, **em qual arquivo** e **o que não pode faltar**, para que qualquer pessoa do grupo consiga pegar uma etapa e executar sozinha.
 
@@ -86,8 +88,11 @@ Cada etapa abaixo diz **o que produzir**, **em qual arquivo** e **o que não pod
 **O que fazer:**
 1. Transformar cada seção do README em 1-2 slides (não copiar texto corrido — usar a tabela de atores, a matriz de payoffs, a tabela de rodadas, o diagrama de superfície de ataque e a tabela de risco como slides visuais).
 2. Estrutura sugerida: (1) o sistema e a interação escolhida, (2) atores e conflito, (3) modelo estático, (4) modelo dinâmico, (5) ameaças e risco priorizado, (6) o que o sistema precisa preservar / próximos passos para o Trabalho 2.
-3. Gravar o vídeo no Canva com todos os integrantes participando (balancear a fala — é critério de nota individual), subir no YouTube (unlisted ou público) e colocar o link no README.
-4. Subir a apresentação em slides (PDF) no Google Drive e colocar o link no README.
+3. Gravar o vídeo no Canva com os quatro integrantes participando (balancear a fala — é critério de nota individual), subir no YouTube e entregar o link no site da atividade. O vídeo exportado deve ter no máximo **10 minutos**, conforme a orientação posterior do professor. Não basta conferir as durações de cada slide isoladamente.
+4. Exportar a apresentação em PDF, disponibilizá-la com acesso para avaliação e entregar o link no site da atividade. Registrar os links no README é opcional, não uma exigência do enunciado.
+5. Conferir que os slides cobrem as seções 3.1–3.4, que não restam textos do template e que o áudio de cada integrante termina junto de seu slide sem cortes ou elementos desaparecendo. Remover Saimon e Jian da capa conforme a composição final informada.
+
+Uma divisão possível para o vídeo é: 2 minutos para sistema/atores, 2 minutos para modelo estático, 2 minutos para modelo dinâmico e 2 minutos para ameaças/resposta. Reservar até 1 minuto para abertura, conclusão e transições, mirando 9 minutos no total. É uma sugestão; a fala real deve ser equilibrada entre os quatro integrantes.
 
 ---
 
@@ -95,16 +100,20 @@ Cada etapa abaixo diz **o que produzir**, **em qual arquivo** e **o que não pod
 
 Confira usando o checklist oficial do enunciado (seção 6):
 
-- [ ] interação específica e bem delimitada
-- [ ] atores, objetivos, ativos, capacidades, informações e pressupostos
-- [ ] matriz de payoffs explicada
-- [ ] pelo menos 3 rodadas de ação/resposta/observação/adaptação
-- [ ] os 3 diagramas solicitados (contexto, superfície de ataque, ciclo adaptativo)
-- [ ] pelo menos 3 ameaças ligadas ao sistema analisado
-- [ ] avaliação de probabilidade, impacto e risco
-- [ ] resposta à ameaça prioritária, próxima adaptação e risco residual
-- [ ] referências, declaração de uso de IA e contribuições individuais
-- [ ] link da apresentação em PDF e do vídeo no README
+- [x] interação específica e bem delimitada
+- [x] atores, objetivos, ativos, capacidades, informações e pressupostos
+- [x] matriz de payoffs explicada
+- [x] pelo menos 3 rodadas de ação/resposta/observação/adaptação
+- [x] os 3 diagramas solicitados (contexto, superfície de ataque, ciclo adaptativo), PNGs e fontes editáveis
+- [x] pelo menos 3 ameaças ligadas ao sistema analisado
+- [x] avaliação de probabilidade, impacto e risco
+- [x] resposta à ameaça prioritária, próxima adaptação e risco residual
+- [x] referências, declaração de uso de IA e contribuições individuais registradas
+- [ ] declaração de IA confirmada pelos quatro integrantes, incluindo outros usos que tenham feito
+- [ ] capa e cadastro da atividade correspondem à composição final do grupo
+- [ ] PDF final sem placeholders e com todas as partes do trabalho
+- [ ] vídeo no YouTube com até 10 minutos, fala equilibrada e sem cortes de áudio
+- [ ] links de PDF e vídeo acessíveis aos avaliadores e submetidos no site da atividade
 
 ---
 
