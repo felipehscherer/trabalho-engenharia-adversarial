@@ -391,3 +391,14 @@ Ver [`fontes/referencias.md`](fontes/referencias.md).
 | Rafael da Silva Moral | Modelo estratégico estático e análise dos equilíbrios. |
 | Lucas Correa Rodrigues | Modelo dinâmico, rodadas e ciclo adaptativo. |
 | Eduardo dos Santos Paim | Ameaças e riscos, superfície de ataque, refinamento dos diagramas e slides correspondentes. |
+
+## Apresentação
+
+Os slides da apresentação acompanham este relatório na pasta [`slides/`](slides/):
+
+| Arquivo | Formato | Uso |
+|---|---|---|
+| [`slides/apresentacao.pptx`](slides/apresentacao.pptx) | PowerPoint editável (12 slides, 16:9) | versão no repositório |
+| [`slides/apresentacao.pdf`](slides/apresentacao.pdf) | PDF (12 páginas, 16:9) | versão para submissão |
+
+Os links do PDF hospedado e do vídeo publicado no YouTube são submetidos no site da atividade, conforme o enunciado.
